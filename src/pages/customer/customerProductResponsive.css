@@ -1,0 +1,21 @@
+@media (max-width: 800px) {
+  .customer-app .product-detail {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (min-width: 681px) and (max-width: 800px) {
+  .customer-app .product-detail-visual .product-artwork {
+    height: 390px;
+    min-height: 0;
+    aspect-ratio: auto;
+  }
+}
+
+@media (max-width: 680px) {
+  .customer-app .category-filter-options {
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+}
