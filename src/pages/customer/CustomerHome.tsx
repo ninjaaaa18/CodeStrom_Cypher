@@ -1,73 +1,101 @@
-import { ArrowDownRight, ArrowRight, MoveUpRight, Search, Sparkles } from 'lucide-react'
+import { ArrowRight, Search, Sparkles } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { CUSTOMER_PATHS } from '../../features/customer/customerPaths'
+import { ProductArtwork } from '../../features/products/ProductArtwork'
 import { ProductCard } from '../../features/products/ProductCard'
 import {
   PRODUCT_CATEGORIES,
   PRODUCTS,
 } from '../../features/products/productCatalog'
 import '../../features/products/productExperience.css'
+import './customerHome.css'
+
+const heroProduct =
+  PRODUCTS.find((product) => product.id === 'chanderi-kurta') ?? PRODUCTS[0]
+const supportingProducts = [
+  PRODUCTS.find((product) => product.id === 'handloom-cotton-saree'),
+  PRODUCTS.find((product) => product.id === 'khadi-cotton-fabric'),
+]
+const textileProduct = PRODUCTS.find(
+  (product) => product.id === 'khadi-cotton-fabric',
+)
 
 export function CustomerHome() {
+  if (!heroProduct || supportingProducts.some((product) => !product) || !textileProduct) {
+    return null
+  }
+
   return (
     <div className="home-page">
-      <section className="home-hero" aria-labelledby="home-title">
-        <div className="hero-copy">
-          <p className="eyebrow hero-eyebrow">
-            <span className="eyebrow-line" aria-hidden="true" />
-            A FRESH TAKE ON FASHION & TEXTILES
+      <section className="editorial-hero" aria-labelledby="home-title">
+        <div className="editorial-hero-copy">
+          <p className="editorial-eyebrow">
+            <span aria-hidden="true" />
+            NEW ARRIVALS <span className="editorial-eyebrow-divider">/</span> THE STUDIO EDIT
           </p>
           <h1 id="home-title">
-            STYLE, MADE
+            Wear the story.
             <br />
-            <span>TO MOVE WITH YOU.</span>
+            Keep the ease.
           </h1>
-          <div className="hero-bottom">
-            <p className="hero-tagline">Thoughtful pieces. Clear demo details.</p>
-            <div className="hero-actions">
-              <Link className="button button-primary" to={CUSTOMER_PATHS.products}>
-                Explore the style edit <ArrowRight size={17} aria-hidden="true" />
-              </Link>
-              <Link className="button button-quiet" to={CUSTOMER_PATHS.magicMirror}>
-                Meet Magic Mirror <MoveUpRight size={15} aria-hidden="true" />
-              </Link>
-            </div>
+          <p className="editorial-hero-description">
+            Thoughtful clothing, tactile textiles and everyday pieces, gathered
+            in one considered edit.
+          </p>
+          <div className="editorial-hero-actions">
+            <Link className="editorial-button" to={CUSTOMER_PATHS.products}>
+              Explore collection <ArrowRight size={16} aria-hidden="true" />
+            </Link>
+            <p>Illustrative styles &amp; INR prices · customer preview</p>
+          </div>
+          <div className="editorial-hero-index" aria-label="Collection details">
+            <span>01 — MADE TO BE WORN</span>
+            <span>{PRODUCTS.length.toString().padStart(2, '0')} DEMO PIECES</span>
           </div>
         </div>
 
-        <div className="hero-art" aria-hidden="true">
-          <div className="art-caption art-caption-top">TEXTURE, CUT, COLOUR</div>
-          <div className="orbit orbit-outer" />
-          <div className="orbit orbit-middle" />
-          <div className="orbit orbit-inner" />
-          <div className="orbit-cross orbit-cross-x" />
-          <div className="orbit-cross orbit-cross-y" />
-          <div className="orbit-core">
-            <span>SWIFT</span>
-            <span className="core-dot" />
-          </div>
-          <span className="orbit-node orbit-node-one" />
-          <span className="orbit-node orbit-node-two" />
-          <span className="orbit-node orbit-node-three" />
-          <span className="orbit-label">YOUR STYLE<br />IN MOTION</span>
-          <div className="art-caption art-caption-bottom">
-            <ArrowDownRight size={15} aria-hidden="true" /> THE SWIFTORA STUDIO EDIT
-          </div>
+        <div className="editorial-hero-gallery" aria-label="Featured collection">
+          <Link
+            className="editorial-artwork editorial-artwork-main"
+            to={`/products/${heroProduct.id}`}
+            aria-label={`View ${heroProduct.name}, demo price ₹${heroProduct.price}`}
+          >
+            <ProductArtwork product={heroProduct} />
+            <span className="editorial-artwork-caption">
+              <span>{heroProduct.category}</span>
+              <strong>{heroProduct.name}</strong>
+              <span>₹{heroProduct.price} · illustrative price</span>
+            </span>
+          </Link>
+          {supportingProducts.map((product, index) =>
+            product ? (
+              <Link
+                className={`editorial-artwork editorial-artwork-small editorial-artwork-small-${index + 1}`}
+                key={product.id}
+                to={`/products/${product.id}`}
+                aria-label={`View ${product.name}, demo price ₹${product.price}`}
+              >
+                <ProductArtwork product={product} compact />
+                <span className="editorial-small-caption">
+                  <span>0{index + 2} / {product.category}</span>
+                  <strong>{product.name}</strong>
+                </span>
+              </Link>
+            ) : null,
+          )}
         </div>
-
-        <div className="hero-index" aria-hidden="true">
-          <span>01 — THE STYLE EDIT</span>
-          <span>MADE FOR EVERYDAY EXPRESSION</span>
-        </div>
+        <span className="editorial-hero-aside" aria-hidden="true">
+          SWIFTORA — CLOTHING &amp; TEXTILES
+        </span>
       </section>
 
-      <section className="customer-home-search" aria-labelledby="home-search-title">
-        <div className="customer-home-search-copy">
-          <p>CLOTHING, TEXTILES & FINISHING TOUCHES</p>
-          <h2 id="home-search-title">What would you like to wear?</h2>
+      <section className="editorial-search" aria-labelledby="home-search-title">
+        <div>
+          <p className="editorial-kicker">FIND YOUR NEXT FAVOURITE</p>
+          <h2 id="home-search-title">What are you looking for?</h2>
         </div>
         <form
-          className="home-product-search"
+          className="editorial-search-form"
           action={CUSTOMER_PATHS.products}
           method="get"
           role="search"
@@ -83,89 +111,100 @@ export function CustomerHome() {
             placeholder="Try linen, kurta, cotton…"
           />
           <button type="submit">
-            Search <ArrowRight size={14} aria-hidden="true" />
+            Search <ArrowRight size={15} aria-hidden="true" />
           </button>
         </form>
       </section>
-      <nav className="home-category-strip" aria-label="Shop by category">
-        <span className="home-category-label">SHOP BY</span>
-        {PRODUCT_CATEGORIES.map((category) => (
-          <Link
-            className="home-category-link"
-            key={category}
-            to={`${CUSTOMER_PATHS.products}?category=${encodeURIComponent(category)}`}
-          >
-            {category}
-            <span>
-              {PRODUCTS.filter((product) => product.category === category)
-                .length.toString()
-                .padStart(2, '0')}
-            </span>
-          </Link>
-        ))}
+
+      <nav className="editorial-categories" aria-label="Shop by category">
+        <p className="editorial-kicker">SHOP BY CATEGORY</p>
+        <div className="editorial-category-grid">
+          {PRODUCT_CATEGORIES.map((category, index) => (
+            <Link
+              className="editorial-category-link"
+              key={category}
+              to={`${CUSTOMER_PATHS.products}?category=${encodeURIComponent(category)}`}
+            >
+              <span className="editorial-category-index">
+                0{index + 1}
+                <span>
+                  {PRODUCTS.filter((product) => product.category === category)
+                    .length.toString()
+                    .padStart(2, '0')}
+                </span>
+              </span>
+              <span className="editorial-category-name">{category}</span>
+              <ArrowRight size={15} aria-hidden="true" />
+            </Link>
+          ))}
+        </div>
       </nav>
 
-      <section className="home-intro" aria-labelledby="intro-title">
-        <div className="intro-marker">
-          <span>01</span>
-          <span className="marker-rule" />
-          <span>THE EDIT</span>
+      <section className="editorial-textile" aria-labelledby="textile-title">
+        <div className="editorial-textile-artwork">
+          <ProductArtwork product={textileProduct} />
+          <span>THE MATERIAL NOTE / 01</span>
         </div>
-        <div className="intro-copy">
-          <h2 id="intro-title">A little more style.<br />A lot less waiting.</h2>
-          <div className="intro-aside">
-            <p>
-              Explore considered clothing, tactile fabrics and easy-to-wear
-              accessories in one editorial demo catalogue. Every price and
-              availability note is illustrative, not live store information.
-            </p>
-            <Link className="text-link" to={CUSTOMER_PATHS.products}>
-              Explore the full edit <ArrowRight size={16} aria-hidden="true" />
-            </Link>
-          </div>
+        <div className="editorial-textile-copy">
+          <p className="editorial-kicker">A CLOSER LOOK AT THE CLOTH</p>
+          <h2 id="textile-title">Made slowly. Meant to be lived in.</h2>
+          <p>
+            A softly slubbed khadi cotton, handspun and handwoven with the
+            irregular texture that makes each length feel its own. An
+            illustrative fabric listing for your next considered make.
+          </p>
+          <Link
+            className="editorial-text-link"
+            to={`${CUSTOMER_PATHS.products}?category=${encodeURIComponent('Fabrics & Textiles')}`}
+          >
+            Explore fabrics &amp; textiles <ArrowRight size={16} aria-hidden="true" />
+          </Link>
+          <span className="editorial-textile-note">
+            {textileProduct.name} · ₹{textileProduct.price} / m · demo listing
+          </span>
         </div>
       </section>
 
-      <section className="home-featured" aria-labelledby="home-featured-title">
-        <div className="home-section-heading">
+      <section className="editorial-featured" aria-labelledby="featured-title">
+        <div className="editorial-section-heading">
           <div>
-            <p className="eyebrow">A FEW GOOD PLACES TO START / 01</p>
-            <h2 id="home-featured-title">Pieces for everyday, thoughtfully chosen.</h2>
+            <p className="editorial-kicker">A FEW GOOD PLACES TO START / 01</p>
+            <h2 id="featured-title">Pieces for everyday, thoughtfully chosen.</h2>
           </div>
-          <Link className="text-link" to={CUSTOMER_PATHS.products}>
-            Browse all demo styles <ArrowRight size={16} aria-hidden="true" />
+          <Link className="editorial-text-link" to={CUSTOMER_PATHS.products}>
+            Browse all styles <ArrowRight size={16} aria-hidden="true" />
           </Link>
         </div>
-        <div className="home-featured-grid">
+        <div className="editorial-product-grid">
           {PRODUCTS.slice(0, 4).map((product) => (
             <ProductCard product={product} key={product.id} />
           ))}
         </div>
-        <p className="demo-disclaimer">
+        <p className="editorial-demo-note">
           Demo selection only. Prices, availability and size options are
           illustrative and not verified live inventory.
         </p>
       </section>
 
-      <section className="home-magic-promo" aria-labelledby="magic-promo-title">
-        <div className="home-magic-copy">
-          <p className="eyebrow">A DIFFERENT WAY TO DISCOVER</p>
+      <section className="editorial-mirror" aria-labelledby="magic-promo-title">
+        <div className="editorial-mirror-copy">
+          <p className="editorial-kicker">A DIFFERENT WAY TO DISCOVER</p>
           <h2 id="magic-promo-title">Meet your Magic Mirror.</h2>
           <p>
-            Curious about finding your fit? Take a look at the customer preview
-            for a little help discovering what works for you.
+            Curious about finding your fit? Explore the customer preview for a
+            little help discovering what works for you.
           </p>
         </div>
-        <Link className="home-magic-link" to={CUSTOMER_PATHS.magicMirror}>
+        <Link className="editorial-mirror-link" to={CUSTOMER_PATHS.magicMirror}>
           Explore Magic Mirror <Sparkles size={15} aria-hidden="true" />
         </Link>
       </section>
 
-      <section className="home-signoff">
-        <span className="signoff-spark" aria-hidden="true">✳</span>
+      <div className="editorial-signoff">
+        <span aria-hidden="true">✳</span>
         <p>Good style is worth getting right.</p>
-        <span className="signoff-note">A FASHION DEMO, NOT A LIVE STORE</span>
-      </section>
+        <small>A FASHION DEMO, NOT A LIVE STORE</small>
+      </div>
     </div>
   )
 }

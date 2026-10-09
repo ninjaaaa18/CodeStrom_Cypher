@@ -4,6 +4,7 @@ import { CustomerNotFound } from '../../pages/customer/CustomerNotFound'
 import { CustomerPlaceholder } from '../../pages/customer/CustomerPlaceholder'
 import { CustomerHome } from '../../pages/customer/CustomerHome'
 import { CustomerCart } from '../../pages/customer/CustomerCart'
+import { CustomerCheckout } from '../../pages/customer/CustomerCheckout'
 import { CustomerProductDetail } from '../../pages/customer/CustomerProductDetail'
 import { CustomerProducts } from '../../pages/customer/CustomerProducts'
 import { CUSTOMER_PATHS } from './customerPaths'
@@ -27,16 +28,7 @@ export function CustomerRouteMap() {
         />
         <Route
           path={CUSTOMER_PATHS.checkout.slice(1)}
-          element={
-            <CustomerPlaceholder
-              eyebrow="CHECKOUT"
-              title="Checkout"
-              task="Review delivery and payment before placing an order."
-              status="Checkout is not connected yet. No payment or order submission happens here."
-              nextLabel="Return to cart"
-              nextTo={CUSTOMER_PATHS.cart}
-            />
-          }
+          element={<CustomerCheckout />}
         />
         <Route
           path={CUSTOMER_PATHS.orders.slice(1)}
