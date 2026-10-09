@@ -3,6 +3,7 @@ import { CustomerLayout } from '../../components/customer/CustomerLayout'
 import { CustomerNotFound } from '../../pages/customer/CustomerNotFound'
 import { CustomerPlaceholder } from '../../pages/customer/CustomerPlaceholder'
 import { CustomerHome } from '../../pages/customer/CustomerHome'
+import { CustomerCart } from '../../pages/customer/CustomerCart'
 import { CustomerProductDetail } from '../../pages/customer/CustomerProductDetail'
 import { CustomerProducts } from '../../pages/customer/CustomerProducts'
 import { CUSTOMER_PATHS } from './customerPaths'
@@ -22,16 +23,7 @@ export function CustomerRouteMap() {
         />
         <Route
           path={CUSTOMER_PATHS.cart.slice(1)}
-          element={
-            <CustomerPlaceholder
-              eyebrow="YOUR CART"
-              title="Cart"
-              task="Review items before checkout."
-              status="The cart is not connected yet, and items are not stored."
-              nextLabel="Continue to checkout"
-              nextTo={CUSTOMER_PATHS.checkout}
-            />
-          }
+          element={<CustomerCart />}
         />
         <Route
           path={CUSTOMER_PATHS.checkout.slice(1)}

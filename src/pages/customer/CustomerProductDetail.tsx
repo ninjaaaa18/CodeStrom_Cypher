@@ -1,13 +1,22 @@
 import { ArrowLeft, ArrowUpRight, CircleAlert } from 'lucide-react'
+import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { addCustomerCartItem } from '../../features/cart/cartStorage'
 import { getProductById } from '../../features/products/productCatalog'
 import { ProductArtwork } from '../../features/products/ProductArtwork'
 import { CUSTOMER_PATHS } from '../../features/customer/customerPaths'
+import '../../features/products/productExperience.css'
 import './customerProductResponsive.css'
 
 export function CustomerProductDetail() {
   const { id } = useParams()
   const product = getProductById(id)
+  const [selectedSize, setSelectedSize] = useState<string | null>(null)
+  const [quantityInput, setQuantityInput] = useState('1')
+  const [cartFeedback, setCartFeedback] = useState<{
+    message: string
+    isError: boolean
+  } | null>(null)
 
   if (!product) {
     return (
@@ -26,6 +35,40 @@ export function CustomerProductDetail() {
         </div>
       </div>
     )
+  }
+
+  const activeProduct = product
+  const hasSizeVariants = product.sizeOptions.length > 1
+  const quantity = Number(quantityInput)
+  const isQuantityValid =
+    Number.isSafeInteger(quantity) &&
+    quantity > 0 &&
+    Number.isSafeInteger(Math.round(product.price * 100) * quantity)
+  const isVariantValid =
+    !hasSizeVariants ||
+    (selectedSize !== null && product.sizeOptions.includes(selectedSize))
+  const priceInPaise = Math.round(product.price * 100)
+  const maxQuantity = Math.floor(Number.MAX_SAFE_INTEGER / priceInPaise)
+
+  function addToCart() {
+    if (!isVariantValid || !isQuantityValid) return
+
+    const result = addCustomerCartItem(
+      activeProduct.id,
+      hasSizeVariants ? selectedSize : null,
+      quantity,
+    )
+    if (result.error) {
+      setCartFeedback({ message: result.error, isError: true })
+      return
+    }
+
+    setCartFeedback({
+      message: result.warning
+        ? `Added to your device cart. ${result.warning}`
+        : 'Added to your device cart. No order or payment has been created.',
+      isError: false,
+    })
   }
 
   return (
@@ -88,18 +131,84 @@ export function CustomerProductDetail() {
             </div>
           </div>
 
+          {hasSizeVariants && (
+            <fieldset className="product-variant-options">
+              <legend>Choose a size</legend>
+              <div className="product-variant-list">
+                {product.sizeOptions.map((size) => (
+                  <label className="product-variant-option" key={size}>
+                    <input
+                      type="radio"
+                      name={`product-size-${product.id}`}
+                      value={size}
+                      checked={selectedSize === size}
+                      onChange={() => {
+                        setSelectedSize(size)
+                        setCartFeedback(null)
+                      }}
+                    />
+                    <span>{size}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+          )}
+
+          <div className="product-quantity-control">
+            <label htmlFor="product-quantity">
+              Quantity ({product.sellingUnit === 'metre' ? 'metres' : product.sellingUnit === 'pair' ? 'pairs' : 'pieces'})
+            </label>
+            <input
+              id="product-quantity"
+              type="number"
+              min="1"
+              max={maxQuantity}
+              step="1"
+              inputMode="numeric"
+              value={quantityInput}
+              aria-describedby="quantity-help"
+              onChange={(event) => {
+                setQuantityInput(event.currentTarget.value)
+                setCartFeedback(null)
+              }}
+            />
+            <span className="product-quantity-help" id="quantity-help">
+              Choose a positive whole number.
+            </span>
+          </div>
+
           <button
             className="add-to-cart-button"
             type="button"
-            disabled
-            aria-describedby="cart-unavailable-note"
+            disabled={!isVariantValid || !isQuantityValid}
+            onClick={addToCart}
           >
             Add to cart <ArrowUpRight size={16} aria-hidden="true" />
           </button>
-          <p className="cart-unavailable-note" id="cart-unavailable-note">
-            Cart integration isn’t available in this preview, so this item can’t
-            be added or purchased.
-          </p>
+          {!isVariantValid && (
+            <p className="cart-unavailable-note" id="cart-unavailable-note">
+              Select a size before adding this style to your cart.
+            </p>
+          )}
+          {!isQuantityValid && (
+            <p className="cart-unavailable-note">
+              Enter a positive whole-number quantity that can be calculated safely.
+            </p>
+          )}
+          {cartFeedback && (
+            <p
+              className={cartFeedback.isError ? 'cart-feedback is-error' : 'cart-feedback'}
+              role={cartFeedback.isError ? 'alert' : 'status'}
+            >
+              {cartFeedback.message}
+              {!cartFeedback.isError && (
+                <>
+                  {' '}
+                  <Link to={CUSTOMER_PATHS.cart}>View cart</Link>
+                </>
+              )}
+            </p>
+          )}
           <p className="detail-demo-note">
             <span>DEMO PRICE</span>
             <span>
