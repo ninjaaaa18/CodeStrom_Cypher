@@ -301,6 +301,11 @@ SWIFTORA combines three important ideas in one experience: modern fashion commer
 ## 👥 Team
 
 CodeStorm
+Team Members:
+-Sriniranjan
+-Ponnanna O B
+-Hema S 
+-Shivani S
 
 ## 🔗 Repository
 
