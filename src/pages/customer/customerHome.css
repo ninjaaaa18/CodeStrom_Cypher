@@ -12,13 +12,7 @@
 .customer-app:has(.home-page) .brand-mark {
   width: 27px;
   height: 27px;
-  background: transparent;
-  color: var(--swiftora-brown);
-  border: 1px solid var(--swiftora-brown);
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: 19px;
-  font-weight: 500;
-  transform: none;
+  object-fit: contain;
 }
 
 .customer-app:has(.home-page) .customer-nav {

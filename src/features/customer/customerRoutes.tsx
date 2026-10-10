@@ -7,6 +7,8 @@ import { CustomerCart } from '../../pages/customer/CustomerCart'
 import { CustomerCheckout } from '../../pages/customer/CustomerCheckout'
 import { CustomerProductDetail } from '../../pages/customer/CustomerProductDetail'
 import { CustomerProducts } from '../../pages/customer/CustomerProducts'
+import { MagicMirror } from '../../pages/customer/MagicMirror'
+import { ClothingTryOn } from '../../pages/customer/ClothingTryOn'
 import { CUSTOMER_PATHS } from './customerPaths'
 
 export function CustomerRouteMap() {
@@ -58,16 +60,11 @@ export function CustomerRouteMap() {
         />
         <Route
           path={CUSTOMER_PATHS.magicMirror.slice(1)}
-          element={
-            <CustomerPlaceholder
-              eyebrow="MAGIC MIRROR"
-              title="A little help finding your fit."
-              task="Get help exploring items that suit you."
-              status="Magic Mirror is not connected yet. No photos or personal data are collected."
-              nextLabel="Browse products"
-              nextTo={CUSTOMER_PATHS.products}
-            />
-          }
+          element={<MagicMirror />}
+        />
+        <Route
+          path={CUSTOMER_PATHS.clothingTryOn.slice(1)}
+          element={<ClothingTryOn />}
         />
         <Route path="*" element={<CustomerNotFound />} />
       </Route>

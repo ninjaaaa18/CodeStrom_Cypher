@@ -1,0 +1,685 @@
+.clothing-tryon-page {
+  --tryon-ink: var(--swiftora-brown, #2d120d);
+  --tryon-accent: var(--swiftora-orange, #b04717);
+  --tryon-copper: var(--swiftora-copper, #b46b3e);
+  --tryon-paper: var(--swiftora-paper, #f3e9de);
+  --tryon-cream: var(--swiftora-cream, #fbf7f1);
+  --tryon-muted: var(--swiftora-muted, #715a50);
+  --tryon-line: var(--swiftora-border, #ddcabc);
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: clamp(32px, 5vw, 70px) clamp(20px, 5.3vw, 76px) 58px;
+  color: var(--tryon-ink);
+}
+
+.clothing-tryon-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 36px;
+  margin-bottom: clamp(30px, 4.2vw, 56px);
+  animation: tryon-arrive 650ms ease-out both;
+}
+
+.clothing-tryon-kicker {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin: 0 0 18px;
+  color: var(--tryon-muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .16em;
+}
+
+.clothing-tryon-kicker-divider {
+  width: 26px;
+  height: 1px;
+  background: var(--tryon-copper);
+}
+
+.clothing-tryon-heading h1,
+.tryon-panel-head h2 {
+  margin: 0;
+  color: var(--tryon-ink);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 400;
+  letter-spacing: -.055em;
+}
+
+.clothing-tryon-heading h1 {
+  font-size: clamp(38px, 5.1vw, 67px);
+  line-height: 1.02;
+}
+
+.clothing-tryon-heading h1 em,
+.tryon-panel-head h2 em {
+  color: var(--tryon-accent);
+  font-weight: 400;
+}
+
+.clothing-tryon-intro {
+  max-width: 310px;
+  margin: 0 0 5px;
+  color: var(--tryon-muted);
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.clothing-tryon-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(300px, .85fr);
+  align-items: start;
+  gap: clamp(30px, 5vw, 72px);
+}
+
+.tryon-stage {
+  min-width: 0;
+  padding: clamp(14px, 2vw, 22px);
+  border: 1px solid var(--tryon-line);
+  background:
+    linear-gradient(142deg, rgba(255, 255, 255, .43), transparent 52%),
+    var(--tryon-cream);
+  box-shadow: 0 20px 55px rgba(45, 18, 13, .075), 0 2px 8px rgba(45, 18, 13, .035);
+  animation: tryon-arrive 700ms 80ms ease-out both;
+}
+
+.tryon-stage-topline,
+.tryon-stage-caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tryon-stage-topline {
+  min-height: 25px;
+  margin-bottom: 13px;
+}
+
+.tryon-stage-label,
+.tryon-stage-index,
+.tryon-stage-caption,
+.tryon-panel-eyebrow,
+.tryon-selected-kicker {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .16em;
+}
+
+.tryon-stage-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--tryon-ink);
+}
+
+.tryon-stage-index {
+  color: var(--tryon-copper);
+}
+
+.tryon-photo-frame {
+  position: relative;
+  display: grid;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  place-items: center;
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(93, 55, 38, .94), rgba(42, 22, 17, .98) 70%),
+    #291812;
+  isolation: isolate;
+}
+
+.tryon-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.tryon-photo-badge {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 6px 10px;
+  background: rgba(20, 10, 7, .62);
+  color: #fbf4ea;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .14em;
+}
+
+/* Pose analysis layer — still image only, runs in the browser (no network/camera). */
+.tryon-pose-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+}
+
+.tryon-pose-status {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: calc(100% - 24px);
+  padding: 8px 12px;
+  background: rgba(20, 10, 7, .66);
+  color: #fbf4ea;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  line-height: 1.4;
+}
+
+.tryon-pose-count {
+  opacity: .75;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.tryon-pose-status .tryon-button-ghost {
+  border-color: rgba(251, 244, 234, .4);
+  color: #fbf4ea;
+  padding: 6px 10px;
+  font-size: 11px;
+}
+
+.tryon-photo-empty {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  max-width: 330px;
+  padding: 44px 22px;
+  color: #f4e9dc;
+  text-align: center;
+}
+
+.tryon-photo-icon {
+  display: grid;
+  width: 66px;
+  height: 66px;
+  margin-bottom: 10px;
+  place-items: center;
+  border: 1px dashed rgba(244, 233, 220, .45);
+  border-radius: 50%;
+  color: #f4e9dc;
+}
+
+.tryon-photo-empty-title {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 21px;
+  font-weight: 400;
+}
+
+.tryon-photo-empty-copy {
+  margin: 0 0 14px;
+  color: rgba(244, 233, 220, .78);
+  font-size: 12.5px;
+  line-height: 1.7;
+}
+
+.tryon-file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.tryon-photo-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.tryon-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border: 1px solid transparent;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.tryon-button-primary {
+  background: var(--tryon-ink);
+  border-color: var(--tryon-ink);
+  color: var(--tryon-cream);
+}
+
+.tryon-button-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(45, 18, 13, .22);
+}
+
+.tryon-button-ghost {
+  background: transparent;
+  border-color: var(--tryon-line);
+  color: var(--tryon-ink);
+}
+
+.tryon-button-ghost:hover {
+  background: rgba(180, 107, 62, .08);
+}
+
+.tryon-button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.tryon-error {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 14px 0 0;
+  padding: 11px 14px;
+  background: rgba(176, 71, 23, .08);
+  border: 1px solid rgba(176, 71, 23, .3);
+  color: #8a3410;
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+.tryon-secure-note,
+.tryon-pose-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 15px 0 0;
+  color: var(--tryon-muted);
+  font-size: 11.5px;
+  line-height: 1.75;
+}
+
+.tryon-pose-note-title {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--tryon-ink);
+  font-size: 11.5px;
+}
+
+.tryon-stage-caption {
+  margin: 17px 0 0;
+  color: var(--tryon-copper);
+  font-size: 9px;
+}
+
+.tryon-panel {
+  min-width: 0;
+  animation: tryon-arrive 700ms 140ms ease-out both;
+}
+
+.tryon-panel-head {
+  margin-bottom: 18px;
+}
+
+.tryon-panel-eyebrow {
+  margin: 0 0 10px;
+  color: var(--tryon-copper);
+}
+
+.tryon-panel-head h2 {
+  font-size: clamp(28px, 3vw, 40px);
+  line-height: 1.05;
+}
+
+.tryon-garment-selector {
+  margin: 0 0 20px;
+  padding: 0;
+  border: 0;
+}
+
+.tryon-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.tryon-garment-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.tryon-garment {
+  display: grid;
+  gap: 7px;
+  padding: 11px;
+  border: 1px solid var(--tryon-line);
+  background: var(--tryon-cream);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.tryon-garment:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(45, 18, 13, .1);
+}
+
+.tryon-garment.is-selected {
+  border-color: var(--tryon-accent);
+  box-shadow: 0 0 0 1px var(--tryon-accent), 0 10px 22px rgba(176, 71, 23, .14);
+}
+
+.tryon-garment-thumb {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: var(--tryon-paper);
+  color: var(--tryon-copper);
+}
+
+.tryon-garment-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tryon-garment-name {
+  color: var(--tryon-ink);
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.tryon-garment-meta {
+  color: var(--tryon-muted);
+  font-size: 10.5px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.tryon-panel-empty {
+  margin: 0 0 20px;
+  color: var(--tryon-muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.tryon-selected {
+  padding: 20px;
+  border: 1px solid var(--tryon-line);
+  background: var(--tryon-cream);
+}
+
+.tryon-selected-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.tryon-selected-kicker {
+  margin: 0;
+  color: var(--tryon-copper);
+}
+
+.tryon-selected-clear {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--tryon-line);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--tryon-muted);
+  cursor: pointer;
+}
+
+.tryon-selected-clear:hover {
+  border-color: var(--tryon-accent);
+  color: var(--tryon-accent);
+}
+
+.tryon-selected h3 {
+  margin: 0 0 4px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -.02em;
+}
+
+.tryon-selected-price {
+  margin: 0 0 14px;
+  color: var(--tryon-accent);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.tryon-selected-specs {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 14px;
+  padding: 14px 0;
+  border-top: 1px solid var(--tryon-line);
+  border-bottom: 1px solid var(--tryon-line);
+}
+
+.tryon-selected-specs > div {
+  display: grid;
+  grid-template-columns: 78px 1fr;
+  gap: 10px;
+  font-size: 12.5px;
+}
+
+.tryon-selected-specs dt {
+  color: var(--tryon-muted);
+  font-weight: 600;
+}
+
+.tryon-selected-specs dd {
+  margin: 0;
+  color: var(--tryon-ink);
+}
+
+.tryon-selected-desc {
+  margin: 0 0 14px;
+  color: var(--tryon-muted);
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.tryon-selected-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--tryon-accent);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-decoration: none;
+}
+
+.tryon-selected-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.tryon-selected-empty {
+  margin: 0 0 20px;
+  padding: 14px 16px;
+  border: 1px dashed var(--tryon-line);
+  color: var(--tryon-muted);
+  font-size: 12.5px;
+  line-height: 1.7;
+}
+
+.tryon-disclaimer {
+  margin: 0 0 20px;
+  color: var(--tryon-muted);
+  font-size: 12px;
+  line-height: 1.75;
+}
+
+.tryon-disclaimer strong {
+  color: var(--tryon-ink);
+}
+
+.tryon-panel-links {
+  display: grid;
+  gap: 10px;
+}
+
+.tryon-return-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--tryon-ink);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-decoration: none;
+}
+
+.tryon-return-link:hover {
+  color: var(--tryon-accent);
+}
+
+.tryon-privacy {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 16px;
+  align-items: start;
+  margin-top: clamp(34px, 4.5vw, 58px);
+  padding: 24px 0;
+  border-top: 1px solid var(--tryon-line);
+}
+
+.tryon-privacy-mark {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid var(--tryon-line);
+  border-radius: 50%;
+  color: var(--tryon-copper);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 18px;
+}
+
+.tryon-privacy p {
+  margin: 0;
+  max-width: 760px;
+  color: var(--tryon-muted);
+  font-size: 12px;
+  line-height: 1.85;
+}
+
+.tryon-privacy strong {
+  color: var(--tryon-ink);
+}
+
+@keyframes tryon-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 900px) {
+  .clothing-tryon-workspace {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 34px;
+  }
+
+  .clothing-tryon-heading {
+    align-items: start;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .clothing-tryon-intro {
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 560px) {
+  .clothing-tryon-page {
+    padding: 29px 16px 38px;
+  }
+
+  .clothing-tryon-kicker {
+    gap: 9px;
+    font-size: 8px;
+  }
+
+  .clothing-tryon-heading h1 {
+    font-size: clamp(37px, 10vw, 49px);
+  }
+
+  .tryon-stage {
+    padding: 12px;
+  }
+
+  .tryon-photo-frame {
+    aspect-ratio: 3 / 4;
+  }
+
+  .tryon-garment-grid {
+    gap: 8px;
+  }
+
+  .tryon-garment {
+    padding: 9px;
+  }
+
+  .tryon-photo-controls {
+    gap: 8px;
+  }
+
+  .tryon-button {
+    flex: 1 1 auto;
+    justify-content: center;
+    padding: 12px 16px;
+  }
+
+  .tryon-selected {
+    padding: 17px;
+  }
+
+  .tryon-privacy {
+    grid-template-columns: 30px 1fr;
+    gap: 13px;
+  }
+
+  .tryon-privacy-mark {
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clothing-tryon-page *,
+  .clothing-tryon-page *::before,
+  .clothing-tryon-page *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}

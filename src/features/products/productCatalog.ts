@@ -36,6 +36,8 @@ export type Product = {
   sellingUnit: 'piece' | 'pair' | 'metre'
   artwork: ProductArtworkKind
   imageAlt: string
+  /** Optional real product photo served from /catalog (falls back to editorial artwork). */
+  imageSrc?: string
 }
 
 export const PRODUCTS: Product[] = [
@@ -53,6 +55,7 @@ export const PRODUCTS: Product[] = [
     sellingUnit: 'piece',
     artwork: 'oxford-shirt',
     imageAlt: 'Editorial illustration of an ecru cotton oxford shirt',
+    imageSrc: '/catalog/mens-cotton-oxford.jpeg',
   },
   {
     id: 'mens-indigo-jeans',
@@ -68,6 +71,7 @@ export const PRODUCTS: Product[] = [
     sellingUnit: 'piece',
     artwork: 'indigo-denim',
     imageAlt: 'Editorial illustration of deep indigo straight-fit denim',
+    imageSrc: '/catalog/mens-indigo-jeans.jpeg',
   },
   {
     id: 'womens-wrap-blouse',
@@ -83,6 +87,7 @@ export const PRODUCTS: Product[] = [
     sellingUnit: 'piece',
     artwork: 'wrap-blouse',
     imageAlt: 'Editorial illustration of a terracotta cotton wrap blouse',
+    imageSrc: '/catalog/womens-wrap-blouse.jpeg',
   },
   {
     id: 'womens-wide-leg-trousers',
@@ -98,6 +103,7 @@ export const PRODUCTS: Product[] = [
     sellingUnit: 'piece',
     artwork: 'wide-leg-trouser',
     imageAlt: 'Editorial illustration of olive wide-leg trousers',
+    imageSrc: '/catalog/womens-wide-leg-trousers.jpeg',
   },
   {
     id: 'chanderi-kurta',
@@ -113,6 +119,7 @@ export const PRODUCTS: Product[] = [
     sellingUnit: 'piece',
     artwork: 'chanderi-kurta',
     imageAlt: 'Editorial illustration of a sage green Chanderi kurta',
+    imageSrc: '/catalog/chanderi-kurta.jpeg',
   },
   {
     id: 'handloom-cotton-saree',
@@ -128,6 +135,7 @@ export const PRODUCTS: Product[] = [
     sellingUnit: 'piece',
     artwork: 'handloom-saree',
     imageAlt: 'Editorial illustration of an ink-blue handloom cotton saree',
+    imageSrc: '/catalog/handloom-cotton-saree.jpeg',
   },
   {
     id: 'khadi-cotton-fabric',
@@ -143,6 +151,7 @@ export const PRODUCTS: Product[] = [
     sellingUnit: 'metre',
     artwork: 'khadi-cotton',
     imageAlt: 'Editorial illustration of a natural handwoven khadi cotton swatch',
+    imageSrc: '/catalog/khadi-cotton.jpeg',
   },
   {
     id: 'linen-blend-fabric',
@@ -158,6 +167,7 @@ export const PRODUCTS: Product[] = [
     sellingUnit: 'metre',
     artwork: 'linen-weave',
     imageAlt: 'Editorial illustration of a stone-grey linen blend fabric swatch',
+    imageSrc: '/catalog/linen-blend-fabric.jpeg',
   },
   {
     id: 'canvas-everyday-tote',
@@ -173,6 +183,7 @@ export const PRODUCTS: Product[] = [
     sellingUnit: 'piece',
     artwork: 'canvas-tote',
     imageAlt: 'Editorial illustration of a natural canvas tote with ink trim',
+    imageSrc: '/catalog/canvas-tote.jpeg',
   },
   {
     id: 'printed-silk-scarf',
@@ -188,6 +199,7 @@ export const PRODUCTS: Product[] = [
     sellingUnit: 'piece',
     artwork: 'silk-scarf',
     imageAlt: 'Editorial illustration of a cobalt and cream printed scarf',
+    imageSrc: '/catalog/silk-scarf.jpeg',
   },
   {
     id: 'cotton-rib-socks',
@@ -203,6 +215,7 @@ export const PRODUCTS: Product[] = [
     sellingUnit: 'pair',
     artwork: 'rib-socks',
     imageAlt: 'Editorial illustration of warm beige cotton rib crew socks',
+    imageSrc: '/catalog/rib-socks.jpeg',
   },
   {
     id: 'everyday-cotton-tee',
@@ -218,6 +231,7 @@ export const PRODUCTS: Product[] = [
     sellingUnit: 'piece',
     artwork: 'cotton-tee',
     imageAlt: 'Editorial illustration of a washed-black cotton crew-neck tee',
+    imageSrc: '/catalog/cotton-tee.jpeg',
   },
 ]
 

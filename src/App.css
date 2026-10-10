@@ -97,14 +97,8 @@
 .brand-mark {
   width: 29px;
   height: 29px;
-  display: grid;
-  place-items: center;
-  background: var(--ink);
-  color: var(--swiftora-cream);
-  font-size: 18px;
-  font-weight: 760;
-  letter-spacing: -0.09em;
-  transform: skew(-8deg);
+  display: block;
+  object-fit: contain;
 }
 
 .customer-nav {

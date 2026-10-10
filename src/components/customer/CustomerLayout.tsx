@@ -8,6 +8,7 @@ const navigation = [
   { label: 'Checkout', to: CUSTOMER_PATHS.checkout },
   { label: 'Orders', to: CUSTOMER_PATHS.orders },
   { label: 'Magic Mirror', to: CUSTOMER_PATHS.magicMirror },
+  { label: 'Fitting Room', to: CUSTOMER_PATHS.clothingTryOn },
 ]
 
 export function CustomerLayout() {
@@ -18,9 +19,13 @@ export function CustomerLayout() {
       </a>
       <header className="customer-header">
         <NavLink className="brand" to={CUSTOMER_PATHS.home} aria-label="Swiftora home">
-          <span className="brand-mark" aria-hidden="true">
-            S
-          </span>
+          <img
+            className="brand-mark"
+            src="/brand/logo.jpeg"
+            alt="SWIFTORA logo"
+            width={29}
+            height={29}
+          />
           <span>SWIFTORA</span>
         </NavLink>
         <nav className="customer-nav" aria-label="Customer navigation">

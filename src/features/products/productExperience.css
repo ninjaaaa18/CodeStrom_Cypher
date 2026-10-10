@@ -368,6 +368,27 @@
   aspect-ratio: 1.2 / 1;
 }
 
+/* Real product photo (copied from the dataset into /catalog).
+   Inherits the container's aspect-ratio + overflow so cards keep a
+   consistent frame; object-fit keeps the whole product visible. */
+.product-artwork-photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  background: var(--art-paper);
+}
+
+/* While a photo is shown, drop the editorial paper grid behind it so the
+   edges read cleanly at any responsive size. */
+.product-artwork.has-photo {
+  background: var(--art-paper);
+}
+
 .artwork-grid {
   position: absolute;
   inset: 0;

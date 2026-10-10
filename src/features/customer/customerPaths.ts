@@ -7,4 +7,5 @@ export const CUSTOMER_PATHS = {
   orders: '/orders',
   orderDetail: '/orders/:id',
   magicMirror: '/magic-mirror',
+  clothingTryOn: '/clothing-try-on',
 } as const
